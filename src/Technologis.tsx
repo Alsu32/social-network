@@ -1,6 +1,6 @@
 import React from "react";
 
-const Technologis =()=> {
+function Technologis() {
     return(
         <ul>
             <li>css</li>
