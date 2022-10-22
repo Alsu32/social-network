@@ -3,10 +3,11 @@
     background-color: yellowgreen;
 }
 
-.item {
+.item a {
     color: #ffffff;
+    text-decoration: none;
 }
 
-.active {
+.item a.active {
     color: hotpink;
 }

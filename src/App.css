@@ -10,7 +10,10 @@
   padding: 20px 100px;
 }
 
-
+.app-wrapper-content {
+  grid-area: main;
+  background-color: lightgoldenrodyellow;
+}
 
 
 
