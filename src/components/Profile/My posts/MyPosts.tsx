@@ -3,15 +3,19 @@ import classes from './MyPosts.module.css';
 import Post from "./Post/Post";
 
 function MyPosts() {
-    return(
-        <div className={`${classes.item}`}>
+    return (
+        <div className={classes.postsBlock}>
             <div>
-                My posts
-                <textarea></textarea>
-                <button>Add post</button>
+                <h3>My posts</h3>
+                <div><textarea></textarea></div>
+                <div>
+                    <button>Add post</button>
+                </div>
             </div>
-            <Post message='Hi! How are you?' like = '15'/>
-            <Post message='It`s my first post' like = '25'/>
+            <div className={classes.posts}>
+                <Post message='Hi! How are you?' like='15'/>
+                <Post message='It`s my first post' like='25'/>
+            </div>
         </div>
 
 
