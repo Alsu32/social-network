@@ -1,13 +1,15 @@
 import React from 'react';
 import classes from './Profile.module.css';
-import MyPosts from "./My posts/MyPosts";
+import MyPosts, {PostsPropsType} from "./My posts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-function Profile() {
+
+function Profile(props:PostsPropsType) {
+
     return(
         <main className={classes.content}>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts postsData={props.postsData}/>
         </main>
     );
 }
