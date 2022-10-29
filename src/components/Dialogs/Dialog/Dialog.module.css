@@ -1,5 +1,5 @@
 .dialog {
-    color: darkslategrey;
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -7,3 +7,7 @@
     color: gold;
 }
 
+.dialogsItem {
+    padding: 10px;
+
+}
