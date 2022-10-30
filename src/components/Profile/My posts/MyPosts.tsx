@@ -6,15 +6,15 @@ export type PostsPropsType = {
     postsData: Array<PostType>
 }
 
-type PostType = {
-    id: number
+export type PostType = {
+    id?: number
     likeCount:number
     post:string
 }
 
 function MyPosts(props:PostsPropsType) {
 
-    const postElements = props.postsData.map(post => <Post message={post.post} likeCount={post.likeCount}/>)
+    const postElements = props.postsData.map(p => <Post post={p.post} likeCount={p.likeCount}/>)
 
 
     return (
