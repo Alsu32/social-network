@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App, {StatePropsType} from './App';
 import state from "./Redux/state";
+import {renderTree} from "./render";
 
 
-ReactDOM.render(
-    <App states={state}/>,
-  document.getElementById('root')
-);
+renderTree(state)

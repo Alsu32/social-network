@@ -4,6 +4,7 @@ import Post from "./Post/Post";
 
 export type PostsPropsType = {
     postsData: Array<PostType>
+    addPost: (postMessage:string)=>void
 }
 
 export type PostType = {
@@ -15,15 +16,18 @@ export type PostType = {
 function MyPosts(props:PostsPropsType) {
 
     const postElements = props.postsData.map(p => <Post post={p.post} likeCount={p.likeCount}/>)
+    const postMessageRef = React.createRef<HTMLTextAreaElement>()
 
-
+    const addPost = ()=> {
+        postMessageRef.current && props.addPost(postMessageRef.current.value)
+    }
     return (
         <div className={classes.postsBlock}>
             <div>
                 <h3 className={classes.postsTitle}>My posts</h3>
-                <div><textarea></textarea></div>
+                <div><textarea ref={postMessageRef}></textarea></div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={classes.posts}>

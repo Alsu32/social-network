@@ -16,6 +16,7 @@ import Friends from "./components/Friends/Friends";
 
 type AppPropsType = {
     states: StatePropsType
+    addPost: (postMessage:string)=>void
 }
 
 export type StatePropsType = {
@@ -42,7 +43,7 @@ function App(props:AppPropsType) {
         <Header/>
         <Navbar/>
         <div className='app-wrapper-content'>
-            <Route path="/profile" render={()=><Profile stateProfilePage={props.states.profilePage}/>}/>
+            <Route path="/profile" render={()=><Profile stateProfilePage={props.states.profilePage} addPost={props.addPost}/>}/>
             <Route path="/dialogs" render={()=><Dialogs stateMessagesPage={props.states.messagesPage}/>}/>
             <Route path="/news" render={()=><News/>}/>
             <Route path="/music" render={()=><Music/>}/>
