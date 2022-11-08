@@ -12,11 +12,12 @@ import {PostType} from "./components/Profile/My posts/MyPosts";
 import {PropsDialogType} from "./components/Dialogs/Dialog/Dialog";
 import {MessagePropsType} from "./components/Dialogs/Message/Message";
 import Friends from "./components/Friends/Friends";
+import {updateNewPostText} from "./Redux/state";
 
 
 type AppPropsType = {
     states: StatePropsType
-    addPost: (postMessage:string)=>void
+    addPost: ()=>void
 }
 
 export type StatePropsType = {
@@ -26,6 +27,7 @@ export type StatePropsType = {
 
 export type ProfilePagePropsType = {
     postsData: Array<PostType>
+    newPostText: string
 }
 
 export type MessagesPagePropsType = {
@@ -43,7 +45,12 @@ function App(props:AppPropsType) {
         <Header/>
         <Navbar/>
         <div className='app-wrapper-content'>
-            <Route path="/profile" render={()=><Profile stateProfilePage={props.states.profilePage} addPost={props.addPost}/>}/>
+            <Route path="/profile" render={()=>
+                <Profile
+                stateProfilePage={props.states.profilePage}
+                addPost={props.addPost}
+                updateNewPostText={updateNewPostText}/>}
+                />
             <Route path="/dialogs" render={()=><Dialogs stateMessagesPage={props.states.messagesPage}/>}/>
             <Route path="/news" render={()=><News/>}/>
             <Route path="/music" render={()=><Music/>}/>
