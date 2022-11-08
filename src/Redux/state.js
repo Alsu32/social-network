@@ -1,4 +1,6 @@
-import {renderTree} from "../render";
+let renderEntireTree = ()=>{
+
+}
 
 let state = {
 
@@ -33,7 +35,7 @@ let state = {
 
 window.state = state;
 
-export let addPost = () => {
+export const addPost = () => {
     let newPost = {
         id: 5,
         post: state.profilePage.newPostText,
@@ -41,12 +43,16 @@ export let addPost = () => {
     }
     state.profilePage.postsData.push(newPost)
     state.profilePage.newPostText = ""
-    renderTree(state)
+    renderEntireTree(state)
 }
 
-export let updateNewPostText = (newText)=>{
+export const updateNewPostText = (newText)=>{
     state.profilePage.newPostText = newText
-    renderTree(state)
+    renderEntireTree(state)
+}
+
+export const subscribe = (observer)=>{
+    renderEntireTree = observer
 }
 
 export default state;

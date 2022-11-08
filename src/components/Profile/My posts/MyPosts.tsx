@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import Post from "./Post/Post";
 
@@ -23,8 +23,8 @@ function MyPosts(props:PostsPropsType) {
     const addPost = ()=> {
         props.addPost()
     }
-    const onPostChange = ()=>{
-        props.updateNewPostText(props.newPostText)
+    const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>)=>{
+        props.updateNewPostText(e.currentTarget.value)
     }
 
 
