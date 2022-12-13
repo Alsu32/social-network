@@ -1,14 +1,12 @@
 import React from 'react';
 import classes from './Profile.module.css';
-import MyPosts, {PostsPropsType} from "./My posts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ProfilePagePropsType} from "../../App";
-import {updateNewPostText} from "../../Redux/state";
+import MyPostsContainer from "./My posts/MyPostsContainer";
 
 type stateProfilePage = {
-    stateProfilePage: ProfilePagePropsType
-    addPost: ()=>void
-    updateNewPostText: (newText:string)=>void
+    stateProps:any
+    //stateProfilePage: ProfilePagePropsType
+   // dispatch:(action: ActionsType)=>void
 }
 
 function Profile(props:stateProfilePage) {
@@ -16,11 +14,12 @@ function Profile(props:stateProfilePage) {
     return(
         <main className={classes.content}>
             <ProfileInfo/>
-            <MyPosts
-                postsData={props.stateProfilePage.postsData}
-                newPostText={props.stateProfilePage.newPostText}
-                addPost={props.addPost}
-                updateNewPostText={updateNewPostText}/>
+            <MyPostsContainer
+                stateProps={props.stateProps}
+                //postsData={props.stateProfilePage.postsData}
+                //newPostText={props.stateProfilePage.newPostText}
+                //dispatch={props.dispatch}
+            />
         </main>
     );
 }

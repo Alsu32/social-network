@@ -12,30 +12,27 @@ import {PostType} from "./components/Profile/My posts/MyPosts";
 import {PropsDialogType} from "./components/Dialogs/Dialog/Dialog";
 import {MessagePropsType} from "./components/Dialogs/Message/Message";
 import Friends from "./components/Friends/Friends";
-import {updateNewPostText} from "./Redux/state";
+import {ActionsType} from "./Redux/state";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-
-type AppPropsType = {
+export type AppPropsType = {
     states: StatePropsType
-    addPost: ()=>void
+    dispatch: (action: ActionsType)=>void
+    store: any
 }
-
 export type StatePropsType = {
     profilePage: ProfilePagePropsType
     messagesPage: MessagesPagePropsType
 }
-
 export type ProfilePagePropsType = {
     postsData: Array<PostType>
     newPostText: string
 }
-
 export type MessagesPagePropsType = {
     dialogsData: Array<PropsDialogType>
     messageData: Array<MessagePropsType>
+    newMessageText:string
 }
-
-
 
 function App(props:AppPropsType) {
 
@@ -47,11 +44,11 @@ function App(props:AppPropsType) {
         <div className='app-wrapper-content'>
             <Route path="/profile" render={()=>
                 <Profile
-                stateProfilePage={props.states.profilePage}
-                addPost={props.addPost}
-                updateNewPostText={updateNewPostText}/>}
-                />
-            <Route path="/dialogs" render={()=><Dialogs stateMessagesPage={props.states.messagesPage}/>}/>
+                    stateProps={props.store}
+                //dispatch={props.dispatch.bind(props.states)}
+                />}
+            />
+            <Route path="/dialogs" render={()=><DialogsContainer store={props.store}/>}/>
             <Route path="/news" render={()=><News/>}/>
             <Route path="/music" render={()=><Music/>}/>
             <Route path="/settings" render={()=><Settings/>}/>

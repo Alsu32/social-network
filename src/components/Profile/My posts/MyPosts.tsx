@@ -2,13 +2,13 @@ import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import Post from "./Post/Post";
 
+
 export type PostsPropsType = {
     postsData: Array<PostType>
-    newPostText: string
+    newPostText?: string
     addPost: ()=>void
-    updateNewPostText: (newText:string)=>void
+    updateNewPostText: (value:string)=>void
 }
-
 export type PostType = {
     id?: number
     likeCount:number
@@ -19,7 +19,6 @@ function MyPosts(props:PostsPropsType) {
 
     const postElements = props.postsData.map(p => <Post post={p.post} likeCount={p.likeCount}/>)
 
-
     const addPost = ()=> {
         props.addPost()
     }
@@ -27,22 +26,19 @@ function MyPosts(props:PostsPropsType) {
         props.updateNewPostText(e.currentTarget.value)
     }
 
-
     return (
         <div className={classes.postsBlock}>
             <div>
                 <h3 className={classes.postsTitle}>My posts</h3>
-                <div><textarea onChange={onPostChange} value={props.newPostText}/></div>
+                <div><textarea className={classes.textArea} onChange={onPostChange} value={props.newPostText}/></div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button className={classes.Button} onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={classes.posts}>
                 {postElements}
             </div>
         </div>
-
-
     );
 }
 
