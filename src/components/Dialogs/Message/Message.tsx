@@ -1,10 +1,9 @@
 import React from 'react';
+// @ts-ignore
 import classes from './Message.module.css';
+import {MessagePropsType} from "../../../Redux/messageReducer";
 
-export type MessagePropsType = {
-    id?:number
-    message: string
-}
+
 
 function Message(props: MessagePropsType) {
     return(

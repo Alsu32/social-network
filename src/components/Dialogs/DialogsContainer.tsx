@@ -1,26 +1,21 @@
-import React, {ChangeEvent} from 'react';
-import classes from './Dialogs.module.css';
-import Dialog, {PropsDialogType} from "./Dialog/Dialog";
-import Message, {MessagePropsType} from "./Message/Message";
-import {MessagesPagePropsType} from "../../App";
-import {ActionsType} from "../../Redux/state";
-import {sendMessageAC, updateNewMessageAC} from "../../Redux/messageReducer";
+import React from 'react';
+import {MessagesPagePropsType, sendMessageAC, updateNewMessageAC} from "../../Redux/messageReducer";
 import Dialogs from "./Dialogs";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootPropsType} from "../../Redux/redux-store";
 
-type stateProfilePage = {
-    store:any
-}
 
-function DialogsContainer(props:stateProfilePage) {
-    const state = props.store.getState()
+function DialogsContainer() {
+    const messagesPage = useSelector<AppRootPropsType, MessagesPagePropsType>(state=> state.messagesPage)
+    const dispatch = useDispatch()
 
-    const onSendMessageClick = ()=> {props.store.dispatch(sendMessageAC())}
-    const onChangeNewMessageText = (value:string)=> {props.store.dispatch(updateNewMessageAC(value))}
+    const onSendMessageClick = ()=> {dispatch(sendMessageAC())}
+    const onChangeNewMessageText = (value:string)=> {dispatch(updateNewMessageAC(value))}
 
     return (
         <Dialogs sendMessage={onSendMessageClick} onChangeNewMessageText={onChangeNewMessageText}
-                 dialogsData={state.messagesPage.dialogsData} messageData={state.messagesPage.messageData}
-                 newMessageText={state.messagesPage.newMessageText} />
+                 dialogsData={messagesPage.dialogsData} messageData={messagesPage.messageData}
+                 newMessageText={messagesPage.newMessageText} />
 
     );
 }

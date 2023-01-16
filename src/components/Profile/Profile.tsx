@@ -1,27 +1,17 @@
 import React from 'react';
-import classes from './Profile.module.css';
+// @ts-ignore
+import styles from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./My posts/MyPostsContainer";
 
-type stateProfilePage = {
-    stateProps:any
-    //stateProfilePage: ProfilePagePropsType
-   // dispatch:(action: ActionsType)=>void
-}
 
-function Profile(props:stateProfilePage) {
+export const Profile = () => {
 
     return(
-        <main className={classes.content}>
+        <main className={styles.content}>
             <ProfileInfo/>
-            <MyPostsContainer
-                stateProps={props.stateProps}
-                //postsData={props.stateProfilePage.postsData}
-                //newPostText={props.stateProfilePage.newPostText}
-                //dispatch={props.dispatch}
-            />
+            <MyPostsContainer />
         </main>
     );
 }
 
-export default Profile;

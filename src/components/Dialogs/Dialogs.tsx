@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from 'react';
+// @ts-ignore
 import classes from './Dialogs.module.css';
 import Dialog, {PropsDialogType} from "./Dialog/Dialog";
-import Message, {MessagePropsType} from "./Message/Message";
-import {MessagesPagePropsType} from "../../App";
-import {ActionsType} from "../../Redux/state";
-import {sendMessageAC, updateNewMessageAC} from "../../Redux/messageReducer";
+import Message from "./Message/Message";
+import {MessagePropsType} from "../../Redux/messageReducer";
+
 
 type stateProfilePage = {
     sendMessage:()=>void
@@ -20,9 +20,7 @@ function Dialogs(props:stateProfilePage) {
     const massegesElement = props.messageData.map(message=><Message message={message.message}/>)
     const newMessageElement = props.newMessageText
 
-    const onSendMessageClick = ()=> {
-        props.sendMessage()
-    }
+    const onSendMessageClick = ()=> {props.sendMessage()}
     const onChangeNewMessageText = (e:ChangeEvent<HTMLTextAreaElement>)=> {
         props.onChangeNewMessageText(e.currentTarget.value)
     }

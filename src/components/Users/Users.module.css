@@ -1,0 +1,43 @@
+.usersPage {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 5px;
+}
+.avatarBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+}
+.avatar {
+    height: 100px;
+    width: 100px;
+}
+.follow {
+
+}
+.descriptionBlock {
+    width: 500px;
+}
+.nameUserBlock {
+
+}
+.nameUser {
+
+}
+.statusUser {
+
+}
+.locationBlock {
+
+}
+.country {
+
+}
+.city {
+
+}
+.selectedPage {
+    font-weight: bold;
+}

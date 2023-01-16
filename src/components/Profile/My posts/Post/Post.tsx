@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore
 import classes from './Post.module.css';
 import {PostType} from "../MyPosts";
 

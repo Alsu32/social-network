@@ -1,6 +1,13 @@
-import {ActionsType} from "./state";
-
-let initialState = {
+export type PostPropsType = {
+    id: number,
+    post: string,
+    likeCount: number
+}
+export type ProfilePostsPropsType = {
+    postsData: Array<PostPropsType>,
+    newPostText: string
+}
+let initialState: ProfilePostsPropsType = {
     postsData:
         [
             {id: 1, post: 'Hi! How are you?', likeCount: 15},
@@ -8,14 +15,12 @@ let initialState = {
         ],
     newPostText: "New Post Text"
 }
-export const profileReducer = (state:any = initialState, action:ActionsType)=>{
+
+
+export const profileReducer = (state:ProfilePostsPropsType = initialState, action:ProfileActionType)=>{
     switch (action.type) {
         case "ADD-POST":
-            const newPost = {id: 5, post: action.postText, likeCount: 20};
-            state.postsData = [newPost, ...state.postsData]
-            state.newPostText = ""
-            return state
-
+            return {...state, postsData: [...state.postsData, {id: 5, post: action.postText, likeCount: 20}], newPostText: ""}
         case "UPDATE-NEW-POST-TEXT":
             return {...state, newPostText: action.newText};
         default:
@@ -24,9 +29,12 @@ export const profileReducer = (state:any = initialState, action:ActionsType)=>{
 
 }
 
+export type ProfileActionType = addPostACType | updateNewPostACType
+export type addPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = (postText:string) => {
     return {type: "ADD-POST", postText} as const
 }
+export type updateNewPostACType = ReturnType<typeof updateNewPostAC>
 export const updateNewPostAC = (newText:string) => {
     return {type: "UPDATE-NEW-POST-TEXT", newText} as const
 }

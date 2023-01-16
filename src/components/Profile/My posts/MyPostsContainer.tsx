@@ -1,19 +1,21 @@
 import React from 'react';
-import {addPostAC, updateNewPostAC} from "../../../Redux/profileReducer";
+import {addPostAC, ProfilePostsPropsType, updateNewPostAC} from "../../../Redux/profileReducer";
 import MyPosts from "./MyPosts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootPropsType} from "../../../Redux/redux-store";
 
-export type PostsPropsType = {
-    stateProps:any
-}
 
-function MyPostsContainer(props:PostsPropsType) {
-    let store = props.stateProps.getState()
-    const addPost = ()=> {props.stateProps.dispatch(addPostAC(store.profilePage.newPostText))}
-    const onPostChange = (value:string)=>{props.stateProps.dispatch(updateNewPostAC(value))}
+
+function MyPostsContainer() {
+    const profilePage = useSelector<AppRootPropsType, ProfilePostsPropsType>(state=> state.profilePage)
+    const dispatch = useDispatch()
+
+    const addPost = ()=> {dispatch(addPostAC(profilePage.newPostText))}
+    const onPostChange = (value:string)=>{dispatch(updateNewPostAC(value))}
 
     return (
-        <MyPosts addPost={addPost} updateNewPostText={onPostChange} postsData={store.profilePage.postsData}
-                 newPostText={store.profilePage.newPostText}/>
+        <MyPosts addPost={addPost} updateNewPostText={onPostChange} postsData={profilePage.postsData}
+                 newPostText={profilePage.newPostText}/>
     );
 }
 

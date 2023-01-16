@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore
 import classes from './Header.module.css';
 
 function Header() {

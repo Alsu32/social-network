@@ -1,7 +1,15 @@
-import {ActionsType} from "./state";
-import {MessagesPagePropsType} from "../App";
+import {PropsDialogType} from "../components/Dialogs/Dialog/Dialog";
 
-const initialState = {
+export type MessagesPagePropsType = {
+    dialogsData: Array<PropsDialogType>
+    messageData: Array<MessagePropsType>
+    newMessageText: string
+}
+export type MessagePropsType = {
+    id?:number
+    message: string
+}
+const initialState:MessagesPagePropsType = {
     dialogsData:
         [
             {id: 1, name: 'Anna'},
@@ -19,24 +27,25 @@ const initialState = {
         ],
     newMessageText: ""
 }
-const messageReducer = (state:MessagesPagePropsType = initialState, action:ActionsType)=>{
+
+
+const messageReducer = (state:MessagesPagePropsType = initialState, action:MessageActionType)=>{
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-TEXT":
-            state.newMessageText = action.messageText;
-            return state;
+            return {...state, newMessageText: action.messageText};
         case "SEND-MESSAGE-TEXT":
-            let body = state.newMessageText;
-            state.newMessageText = "";
-            state.messageData.push({id: 6, message: body});
-            return state;
+            return {...state, messageData: [...state.messageData, {id: 6, message: state.newMessageText}], newMessageText: ""};
         default:
             return state;
     }
 }
 
+export type MessageActionType = updateNewMessageACType | sendMessageACType
+export type updateNewMessageACType = ReturnType<typeof updateNewMessageAC>
 export const updateNewMessageAC = (messageText:string) => {
     return {type: "UPDATE-NEW-MESSAGE-TEXT", messageText: messageText} as const
 }
+export type sendMessageACType = ReturnType<typeof sendMessageAC>
 export const sendMessageAC = () => {
     return {type: "SEND-MESSAGE-TEXT"} as const
 }
