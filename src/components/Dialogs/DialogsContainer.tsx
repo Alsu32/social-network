@@ -1,13 +1,9 @@
 import React from 'react';
-import {MessagesPagePropsType, sendMessageAC, updateNewMessageAC} from "../../Redux/messageReducer";
+import {sendMessageAC, updateNewMessageAC} from "../../Redux/messageReducer";
 import Dialogs from "./Dialogs";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootPropsType} from "../../Redux/redux-store";
+import {connect} from "react-redux";
 
-
-function DialogsContainer() {
-    const messagesPage = useSelector<AppRootPropsType, MessagesPagePropsType>(state=> state.messagesPage)
-    const dispatch = useDispatch()
+/*function DialogsContainer() {
 
     const onSendMessageClick = ()=> {dispatch(sendMessageAC())}
     const onChangeNewMessageText = (value:string)=> {dispatch(updateNewMessageAC(value))}
@@ -18,6 +14,19 @@ function DialogsContainer() {
                  newMessageText={messagesPage.newMessageText} />
 
     );
+}*/
+let mapStateToProps = (state:any) => {
+    return {
+        messagePage: state.messagePage,
+        isAuth: state.auth
+    }
+}
+let mapDispatchToProps = (dispatch:(action:any)=>void) => {
+    return {
+        onSendMessageClick: ()=> {dispatch(sendMessageAC())},
+        onChangeNewMessageText: (value:string)=> {dispatch(updateNewMessageAC(value))}
+    }
 }
 
-export default DialogsContainer;
+const DialogsContainer: any = connect(mapStateToProps, mapDispatchToProps) (Dialogs)
+export default DialogsContainer

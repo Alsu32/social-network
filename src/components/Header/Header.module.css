@@ -9,3 +9,12 @@
     padding: 3px;
     border-radius: 50%;
 }
+.login {
+    float: right;
+    margin-right: 20px;
+}
+.loginLink {
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+}

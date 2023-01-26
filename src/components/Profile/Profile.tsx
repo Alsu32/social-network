@@ -5,11 +5,12 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./My posts/MyPostsContainer";
 
 
-export const Profile = () => {
+
+export const Profile = (props:any) => {
 
     return(
         <main className={styles.content}>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer />
         </main>
     );

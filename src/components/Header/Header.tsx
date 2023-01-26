@@ -1,13 +1,20 @@
 import React from 'react';
 // @ts-ignore
-import classes from './Header.module.css';
+import styles from './Header.module.css';
+import {NavLink} from "react-router-dom";
 
-function Header() {
-    return(
-        <header className={classes.header}>
-            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEYVSFHMOFU6KysKs97vtLdUQkxv5o3PblJw&usqp=CAU'/>
+export const Header = (props: any) => {
+    return (
+        <header className={styles.header}>
+            <img
+                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEYVSFHMOFU6KysKs97vtLdUQkxv5o3PblJw&usqp=CAU'/>
+            <div className={styles.login}>
+                {props.isAuth
+                    ? props.login
+                    : <NavLink to={'/login'} className={styles.loginLink}>Login</NavLink>
+                }
+            </div>
         </header>
     );
 }
 
-export default Header;

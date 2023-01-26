@@ -3,27 +3,29 @@ import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css';
 import Dialog, {PropsDialogType} from "./Dialog/Dialog";
 import Message from "./Message/Message";
-import {MessagePropsType} from "../../Redux/messageReducer";
+import {MessagePropsType, MessagesPagePropsType} from "../../Redux/messageReducer";
+import {Redirect} from "react-router-dom";
 
 
 type stateProfilePage = {
-    sendMessage:()=>void
+    onSendMessageClick:()=>void
     onChangeNewMessageText:(value:string)=>void
-    dialogsData: Array<PropsDialogType>
-    messageData: Array<MessagePropsType>
-    newMessageText:string
+    messagePage: MessagesPagePropsType
+    isAuth: boolean
 }
 
 function Dialogs(props:stateProfilePage) {
 
-    const dialogsItem = props.dialogsData.map(dialog=><Dialog name={dialog.name} id={dialog.id}/>)
-    const massegesElement = props.messageData.map(message=><Message message={message.message}/>)
-    const newMessageElement = props.newMessageText
+    const dialogsItem = props.messagePage.dialogsData.map(dialog => <Dialog name={dialog.name} id={dialog.id}/>)
+    const massegesElement = props.messagePage.messageData.map(message=><Message message={message.message}/>)
+    const newMessageElement = props.messagePage.newMessageText
 
-    const onSendMessageClick = ()=> {props.sendMessage()}
+    const onSendMessageClick = ()=> {props.onSendMessageClick()}
     const onChangeNewMessageText = (e:ChangeEvent<HTMLTextAreaElement>)=> {
         props.onChangeNewMessageText(e.currentTarget.value)
     }
+
+    if(!props.isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={classes.dialogs}>

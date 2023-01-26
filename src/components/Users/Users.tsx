@@ -1,42 +1,51 @@
 import React from 'react';
 // @ts-ignore
 import styles from './Users.module.css'
-import {UserPropsType} from "../../Redux/usersReducer";
+import {setFollowInProgress, setFollowUser, setUnFollowUser, UserPropsType} from "../../Redux/usersReducer";
+import {NavLink} from "react-router-dom";
+import axios from "axios";
+import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
-    users:  Array<UserPropsType>
+    users: Array<UserPropsType>
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    onPageChanged: (pageNumber:number)=>void
-    followUser: (idUser:number)=>void
-    unFollowUser: (idUser:number)=>void
+    onPageChanged: (pageNumber: number) => void
+    followInProgress: Array<number>
+    setUnFollowUser: (userId: number) => void
+    setFollowUser: (userId: number) => void
 }
 
-const Users = (props:UsersPropsType) => {
+const Users = (props: UsersPropsType) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = []
-    for (let i = 1; i <= pagesCount; i++) {pages.push(i)}
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
 
     return (
         <div>
             <div>
                 {pages.map(p => {
                     return <span key={p}
-                        onClick={() => {props.onPageChanged(p)}}
-                        className={props.currentPage === p ? styles.selectedPage : ''}> {p} </span>
-                    })}
+                                 onClick={() => {
+                                     props.onPageChanged(p)
+                                 }}
+                                 className={props.currentPage === p ? styles.selectedPage : ''}> {p} </span>
+                })}
             </div>
             {
-                props.users.map((u: UserPropsType) => <div key={u.id}
-                                                           className={styles.usersPage}>
+                props.users.map((u: UserPropsType) => <div key={u.id} className={styles.usersPage}>
                         <div className={styles.avatarBlock}>
-                            <img className={styles.avatar}
-                                 src='https://sunmag.me/wp-content/uploads/2019/11/sunmag-002-small-avatar.png'/>
-                            <button onClick={() => {
-                                u.followed ? props.unFollowUser(u.id) : props.followUser(u.id)
-                            }}
-                                    className={styles.follow}> {u.followed ? 'Follow' : 'Unfollow'} </button>
+                            <NavLink to={'/profile/' + u.id}>
+                                <img className={styles.avatar}
+                                     src='https://sunmag.me/wp-content/uploads/2019/11/sunmag-002-small-avatar.png'/>
+                            </NavLink>
+                            <button disabled={props.followInProgress.some(id => id === u.id)} className={styles.follow}
+                                    onClick={() => {u.followed ? props.setUnFollowUser(u.id) : props.setFollowUser(u.id)}}>
+                                {u.followed ? 'UnFollow' : 'Follow'}
+                            </button>
                         </div>
                         <div className={styles.descriptionBlock}>
                             <div className={styles.nameUserBlock}>

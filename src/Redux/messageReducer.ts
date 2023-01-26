@@ -29,7 +29,7 @@ const initialState:MessagesPagePropsType = {
 }
 
 
-const messageReducer = (state:MessagesPagePropsType = initialState, action:MessageActionType)=>{
+export const messageReducer = (state:MessagesPagePropsType = initialState, action:MessageActionType)=>{
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-TEXT":
             return {...state, newMessageText: action.messageText};
@@ -49,5 +49,3 @@ export type sendMessageACType = ReturnType<typeof sendMessageAC>
 export const sendMessageAC = () => {
     return {type: "SEND-MESSAGE-TEXT"} as const
 }
-
-export default messageReducer;

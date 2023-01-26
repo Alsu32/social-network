@@ -1,9 +1,12 @@
+import {followAPI, userAPI} from "../api/api";
+
 export type UsersPagePropsType = {
     users: Array<UserPropsType>
     pageSize: number
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followInProgress: Array<number>
 }
 export type UserPropsType = {
     "name": string,
@@ -27,7 +30,8 @@ let initialState:UsersPagePropsType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followInProgress: []
 }
 
 
@@ -45,6 +49,11 @@ export const usersReducer = (state:UsersPagePropsType = initialState, action:Use
             return {...state, totalUsersCount:action.totalUsersCount / 500};
         case "SET-IS-FETCHING":
             return {...state, isFetching:action.isFetching};
+        case "SET-FOLLOW-IN-PROGRESS":
+            return {...state, followInProgress: action.isFollowInProgress
+                        ? [...state.followInProgress, action.userId]
+                        : state.followInProgress.filter(id => id !== action.userId)
+            };
         default:
             return state;
     }
@@ -52,7 +61,7 @@ export const usersReducer = (state:UsersPagePropsType = initialState, action:Use
 }
 
 export type  UsersReducerActionType = followACType | unFollowACType | setUsersACType | setCurrentPageACType |
-    setTotalUsersCountACType | setIsFetchingACType
+    setTotalUsersCountACType | setIsFetchingACType | setFollowInProgressACType
 export type followACType = ReturnType<typeof follow>
 export const follow = (userId:number) => {
     return {type: "FOLLOW", userId} as const
@@ -76,4 +85,42 @@ export const setTotalUsersCount = (totalUsersCount:number) => {
 export type setIsFetchingACType = ReturnType<typeof setIsFetching>
 export const setIsFetching = (isFetching:boolean) => {
     return {type: "SET-IS-FETCHING", isFetching} as const
+}
+export type setFollowInProgressACType = ReturnType<typeof setFollowInProgress>
+export const setFollowInProgress = (isFollowInProgress:boolean, userId: number) => {
+    return {type: "SET-FOLLOW-IN-PROGRESS", isFollowInProgress, userId} as const
+}
+
+export const getUsers = (currentPage:number, pageSize:number) => {
+    return (dispatch:(action:UsersReducerActionType)=>void) => {
+        dispatch(setIsFetching(true))
+        userAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+            })
+    }
+}
+export const setUnFollowUser = (userId: number) => {
+    return (dispatch: (action:UsersReducerActionType)=>void) => {
+        dispatch(setFollowInProgress(true, userId))
+        followAPI.deleteFollow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unFollow(userId))
+                dispatch(setFollowInProgress(false, userId))
+            }
+        })
+    }
+}
+export const setFollowUser = (userId: number) => {
+    return (dispatch: (action:UsersReducerActionType)=>void) => {
+        dispatch(setFollowInProgress(true, userId))
+        followAPI.postFollow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(follow(userId))
+                dispatch(setFollowInProgress(false, userId))
+            }
+        })
+    }
 }
