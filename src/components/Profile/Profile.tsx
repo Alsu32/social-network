@@ -4,13 +4,11 @@ import styles from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./My posts/MyPostsContainer";
 
-
-
 export const Profile = (props:any) => {
 
-    return(
+    return (
         <main className={styles.content}>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateUserStatus}/>
             <MyPostsContainer />
         </main>
     );

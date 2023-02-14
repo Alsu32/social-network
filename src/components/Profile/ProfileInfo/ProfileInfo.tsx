@@ -1,20 +1,20 @@
 import React from 'react';
 // @ts-ignore
 import classes from './ProfileInfo.module.css';
-import Preloader from "../../Preloader/Preloader";
+import Preloader from "../../common/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus";
 
 
 function ProfileInfo(props:any) {
-    if(!props.profile) {
-        return <Preloader/>
-    }
+    if(!props.profile) {return <Preloader/>}
+
     return(
         <div>
             <div className={classes.profileInfo}>
                 <div className={classes.imgBlock}><img src='https://arthive.net/res/media/img/oy1200/work/b31/46527@2x.jpg'/></div>
                 <div className={classes.description}>
                     <img src={props.profile.photos.large}/>
-                    Description
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 </div>
             </div>
         </div>

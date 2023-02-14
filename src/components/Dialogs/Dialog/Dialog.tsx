@@ -9,7 +9,6 @@ export type PropsDialogType = {
     id: number
 }
 
-
 function Dialog(props:PropsDialogType) {
 
     let path='/dialogs/'+ props.id;

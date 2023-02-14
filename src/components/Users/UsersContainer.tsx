@@ -3,7 +3,10 @@ import {connect} from "react-redux";
 import {getUsers, setCurrentPage, setFollowUser, setIsFetching, setTotalUsersCount, setUnFollowUser, setUsers}
     from "../../Redux/usersReducer";
 import Users from "./Users";
-import Preloader from "../Preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {AppRootPropsType} from "../../Redux/redux-store";
+import {compose} from "redux";
 
 
 class UsersContainer extends React.Component<any, any> {
@@ -29,7 +32,7 @@ class UsersContainer extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: AppRootPropsType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -39,29 +42,10 @@ const mapStateToProps = (state: any) => {
         followInProgress: state.usersPage.followInProgress
     }
 }
-/*const mapDispatchToProps = (dispatch: (action: UsersReducerActionType) => void) => {
-    return {
-        followUser: (userId: number) => {
-            dispatch(followAC(userId))
-        },
-        unFollowUser: (userId: number) => {
-            dispatch(unFollowAC(userId))
-        },
-        setUsers: (users: Array<UserPropsType>) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setTotalUsersCountAC(totalUsersCount / 500))
-        },
-        setIsFetching: (isFetching: boolean) => {
-            dispatch(setIsFetchingAC(isFetching))
-        }
-    }
-}*/
 
-export default connect(mapStateToProps, {
-    setUsers, setCurrentPage, setTotalUsersCount, setIsFetching, getUsers, setUnFollowUser, setFollowUser
-})(UsersContainer)
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        setUsers, setCurrentPage, setTotalUsersCount, setIsFetching, getUsers, setUnFollowUser, setFollowUser
+    }),
+    WithAuthRedirect
+)(UsersContainer)

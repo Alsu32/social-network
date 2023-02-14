@@ -1,32 +1,18 @@
 import React from 'react';
-import {sendMessageAC, updateNewMessageAC} from "../../Redux/messageReducer";
-import Dialogs from "./Dialogs";
+import {sendMessageAC} from "../../Redux/messageReducer";
+import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {AppRootPropsType} from "../../Redux/redux-store";
+import {compose} from "redux";
 
-/*function DialogsContainer() {
 
-    const onSendMessageClick = ()=> {dispatch(sendMessageAC())}
-    const onChangeNewMessageText = (value:string)=> {dispatch(updateNewMessageAC(value))}
-
-    return (
-        <Dialogs sendMessage={onSendMessageClick} onChangeNewMessageText={onChangeNewMessageText}
-                 dialogsData={messagesPage.dialogsData} messageData={messagesPage.messageData}
-                 newMessageText={messagesPage.newMessageText} />
-
-    );
-}*/
-let mapStateToProps = (state:any) => {
+let mapStateToProps = (state:AppRootPropsType) => {
     return {
-        messagePage: state.messagePage,
-        isAuth: state.auth
+        messagePage: state.messagePage
     }
 }
-let mapDispatchToProps = (dispatch:(action:any)=>void) => {
-    return {
-        onSendMessageClick: ()=> {dispatch(sendMessageAC())},
-        onChangeNewMessageText: (value:string)=> {dispatch(updateNewMessageAC(value))}
-    }
-}
-
-const DialogsContainer: any = connect(mapStateToProps, mapDispatchToProps) (Dialogs)
-export default DialogsContainer
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {sendMessageAC}),
+    WithAuthRedirect
+)(Dialogs)

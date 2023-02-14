@@ -1,10 +1,8 @@
 import React from 'react';
 // @ts-ignore
 import styles from './Users.module.css'
-import {setFollowInProgress, setFollowUser, setUnFollowUser, UserPropsType} from "../../Redux/usersReducer";
+import {UserPropsType} from "../../Redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
     users: Array<UserPropsType>

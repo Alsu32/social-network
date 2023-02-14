@@ -1,31 +1,20 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 // @ts-ignore
 import classes from './Dialogs.module.css';
-import Dialog, {PropsDialogType} from "./Dialog/Dialog";
+import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
-import {MessagePropsType, MessagesPagePropsType} from "../../Redux/messageReducer";
-import {Redirect} from "react-router-dom";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {MessagesPagePropsType} from "../../Redux/messageReducer";
+import {Textarea} from "../common/FormControls/FormControls";
+import {maxLengthCreator, required} from "../../utils/validators/validator";
 
-
-type stateProfilePage = {
-    onSendMessageClick:()=>void
-    onChangeNewMessageText:(value:string)=>void
-    messagePage: MessagesPagePropsType
-    isAuth: boolean
-}
-
-function Dialogs(props:stateProfilePage) {
-
+//components
+export function Dialogs(props: stateProfilePage) {
     const dialogsItem = props.messagePage.dialogsData.map(dialog => <Dialog name={dialog.name} id={dialog.id}/>)
-    const massegesElement = props.messagePage.messageData.map(message=><Message message={message.message}/>)
-    const newMessageElement = props.messagePage.newMessageText
-
-    const onSendMessageClick = ()=> {props.onSendMessageClick()}
-    const onChangeNewMessageText = (e:ChangeEvent<HTMLTextAreaElement>)=> {
-        props.onChangeNewMessageText(e.currentTarget.value)
+    const massegesElement = props.messagePage.messageData.map(message => <Message message={message.message}/>)
+    const onSendMessageClick = (value: MessageFormType) => {
+        props.sendMessageAC(value.newMessageBody)
     }
-
-    if(!props.isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={classes.dialogs}>
@@ -35,17 +24,31 @@ function Dialogs(props:stateProfilePage) {
             <div className={classes.messages}>
                 <div>{massegesElement}</div>
                 <div>
-                    <div><textarea
-                        value = {newMessageElement}
-                        placeholder="Enter your message"
-                        onChange={onChangeNewMessageText}/>
-                    </div>
-                    <div><button onClick={onSendMessageClick}>Send</button></div>
+                    <AddMessageReduxForm onSubmit={onSendMessageClick}/>
                 </div>
             </div>
         </div>
 
     );
 }
-
-export default Dialogs;
+const maxLength50 = maxLengthCreator(50)
+export const AddMessageForm: React.FC<InjectedFormProps<MessageFormType>> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field component={Textarea} validate={[required, maxLength50]} name='newMessageBody' placeholder="Enter your message"/>
+            </div>
+            <div><button>Send</button></div>
+        </form>
+    )
+}
+export const AddMessageReduxForm = reduxForm<MessageFormType>({form: 'dialogAddMessageForm'})(AddMessageForm)
+//types
+type stateProfilePage = {
+    sendMessageAC: (message: string) => void
+    messagePage: MessagesPagePropsType
+    isAuth: boolean
+}
+type MessageFormType = {
+    newMessageBody: string
+}

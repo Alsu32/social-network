@@ -1,14 +1,6 @@
 import {PropsDialogType} from "../components/Dialogs/Dialog/Dialog";
 
-export type MessagesPagePropsType = {
-    dialogsData: Array<PropsDialogType>
-    messageData: Array<MessagePropsType>
-    newMessageText: string
-}
-export type MessagePropsType = {
-    id?:number
-    message: string
-}
+//state
 const initialState:MessagesPagePropsType = {
     dialogsData:
         [
@@ -24,28 +16,29 @@ const initialState:MessagesPagePropsType = {
             {id: 2, message: 'How about meeting?'},
             {id: 3, message: "'It's good idea!"},
             {id: 4, message: 'I am free on Saturday:)'}
-        ],
-    newMessageText: ""
+        ]
 }
-
-
+//reducer
 export const messageReducer = (state:MessagesPagePropsType = initialState, action:MessageActionType)=>{
     switch (action.type) {
-        case "UPDATE-NEW-MESSAGE-TEXT":
-            return {...state, newMessageText: action.messageText};
         case "SEND-MESSAGE-TEXT":
-            return {...state, messageData: [...state.messageData, {id: 6, message: state.newMessageText}], newMessageText: ""};
+            return {...state, messageData: [...state.messageData, {id: 6, message: action.message}]};
         default:
             return state;
     }
 }
-
-export type MessageActionType = updateNewMessageACType | sendMessageACType
-export type updateNewMessageACType = ReturnType<typeof updateNewMessageAC>
-export const updateNewMessageAC = (messageText:string) => {
-    return {type: "UPDATE-NEW-MESSAGE-TEXT", messageText: messageText} as const
+// action
+export const sendMessageAC = (message: string) => {
+    return {type: "SEND-MESSAGE-TEXT", message} as const
 }
+//types
+export type MessageActionType = sendMessageACType
 export type sendMessageACType = ReturnType<typeof sendMessageAC>
-export const sendMessageAC = () => {
-    return {type: "SEND-MESSAGE-TEXT"} as const
+export type MessagesPagePropsType = {
+    dialogsData: Array<PropsDialogType>
+    messageData: Array<MessagePropsType>
+}
+export type MessagePropsType = {
+    id?:number
+    message: string
 }
