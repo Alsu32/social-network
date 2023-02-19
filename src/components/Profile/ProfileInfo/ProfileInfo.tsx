@@ -2,7 +2,7 @@ import React from 'react';
 // @ts-ignore
 import classes from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
+import {ProfileStatusWithHook} from "./ProfileStatusWithStatus";
 
 
 function ProfileInfo(props:any) {
@@ -14,7 +14,7 @@ function ProfileInfo(props:any) {
                 <div className={classes.imgBlock}><img src='https://arthive.net/res/media/img/oy1200/work/b31/46527@2x.jpg'/></div>
                 <div className={classes.description}>
                     <img src={props.profile.photos.large}/>
-                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                    <ProfileStatusWithHook status={props.status} updateStatus={props.updateStatus}/>
                 </div>
             </div>
         </div>

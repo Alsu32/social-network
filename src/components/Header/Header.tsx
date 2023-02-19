@@ -10,7 +10,7 @@ export const Header = (props: any) => {
                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEYVSFHMOFU6KysKs97vtLdUQkxv5o3PblJw&usqp=CAU'/>
             <div className={styles.login}>
                 {props.isAuth
-                    ? props.login
+                    ? <div className={styles.loginName}>{props.login} - <button onClick={props.logout}>Log out</button></div>
                     : <NavLink to={'/login'} className={styles.loginLink}>Login</NavLink>
                 }
             </div>

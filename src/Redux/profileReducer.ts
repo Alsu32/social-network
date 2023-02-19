@@ -31,14 +31,12 @@ export const setUserProfile = (profile:any) => {return {type: "SET-USER-PROFILE"
 export const setUserStatus = (status:any) => {return {type: "SET-USER-STATUS", status} as const}
 export const setUpdateUserStatus = (status:string) => {return {type: "UPDATE-USER-STATUS", status} as const}
 //thunks
-export const getUserProfile = (userId:number | undefined) => (dispatch: (action:ProfileActionType)=>void) => {
-    if(!userId) {userId = 27434}
+export const getUserProfile = (userId:number) => (dispatch: (action:ProfileActionType)=>void) => {
     profileAPI.getUserProfile(userId).then(data => {
         dispatch(setUserProfile(data))
     })
 }
-export const getUserStatus = (userId:number | undefined) => (dispatch: (action:ProfileActionType)=>void) => {
-    if(!userId) {userId = 27434}
+export const getUserStatus = (userId:number) => (dispatch: (action:ProfileActionType)=>void) => {
     profileAPI.getUserStatus(userId).then(data => {
         dispatch(setUserStatus(data))
     })

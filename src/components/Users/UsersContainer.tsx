@@ -4,7 +4,6 @@ import {getUsers, setCurrentPage, setFollowUser, setIsFetching, setTotalUsersCou
     from "../../Redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {AppRootPropsType} from "../../Redux/redux-store";
 import {compose} from "redux";
 
@@ -47,5 +46,5 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         setUsers, setCurrentPage, setTotalUsersCount, setIsFetching, getUsers, setUnFollowUser, setFollowUser
     }),
-    WithAuthRedirect
+    //WithAuthRedirect
 )(UsersContainer)
