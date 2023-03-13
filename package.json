@@ -2,7 +2,7 @@
   "name": "samurai-way",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://Alsu32.github.io/samurai-way-main.git",
+  "homepage": "http://Alsu32.github.io/social-network",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "5.14.1",
