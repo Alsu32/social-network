@@ -4,10 +4,11 @@ import styles from "./Profile.module.css";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {getUserProfile, getUserStatus, updateUserStatus} from "../../Redux/profileReducer";
-import {withRouter} from "react-router-dom";
 import {AppRootPropsType} from "../../Redux/redux-store";
 import {compose} from "redux";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withRouter} from "../../hoc/withRouter";
+
 
 
 class ProfileContainer extends React.Component<any, any> {

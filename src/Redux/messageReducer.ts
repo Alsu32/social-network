@@ -1,4 +1,5 @@
 import {PropsDialogType} from "../components/Dialogs/Dialog/Dialog";
+import {AppActionType} from "./redux-store";
 
 //state
 const initialState:MessagesPagePropsType = {

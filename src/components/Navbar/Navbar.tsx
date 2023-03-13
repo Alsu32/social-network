@@ -4,19 +4,33 @@ import classes from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import Friends from "../Friends/Friends";
 
+//const setActive = ({isActive: boolean}) => isActive ? classes.active : ""
 
 function Navbar() {
-    return(
+    return (
         <nav className={classes.nav}>
-            <div className={`${classes.item}`}><NavLink to='/profile' activeClassName={classes.active}>Profile</NavLink></div>
-            <div className={classes.item}><NavLink to='/dialogs' activeClassName={classes.active}>Messages</NavLink></div>
-            <div className={classes.item}><NavLink to='/users' activeClassName={classes.active}>Users</NavLink></div>
-            <div className={classes.item}><NavLink to='/news' activeClassName={classes.active}>News</NavLink></div>
-            <div className={classes.item}><NavLink to='/music' activeClassName={classes.active}>Music</NavLink></div>
-            <div className={classes.item}><NavLink to='/settings' activeClassName={classes.active}>Settings</NavLink></div>
-            <Friends />
+            <div className={`${classes.item}`}>
+                <NavLink to='/profile'>Profile</NavLink>
+            </div>
+            <div className={classes.item}>
+                <NavLink to='/dialogs'>Messages</NavLink>
+            </div>
+            <div className={classes.item}>
+                <NavLink to='/users'>Users</NavLink>
+            </div>
+            <div className={classes.item}>
+                <NavLink to='/news'>News</NavLink>
+            </div>
+            <div className={classes.item}>
+                <NavLink to='/music'>Music</NavLink>
+            </div>
+            <div className={classes.item}>
+                <NavLink to='/settings'>Settings</NavLink>
+            </div>
+            <Friends/>
         </nav>
     );
 }
 
 export default Navbar;
+

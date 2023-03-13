@@ -15,7 +15,8 @@ function Dialog(props:PropsDialogType) {
 
     return (
         <div className={classes.dialog}>
-            <NavLink to={path} activeClassName={classes.active}>{props.name}</NavLink>
+            <NavLink to={path} style={({ isActive }) =>
+                isActive ? classes.active : undefined}>{props.name}</NavLink>
         </div>
     );
 }

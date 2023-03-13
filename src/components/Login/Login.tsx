@@ -3,7 +3,7 @@ import {FormDataType, LoginForm} from "./LoginForm";
 import {reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {login} from "../../Redux/authReducer";
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {AppRootPropsType} from "../../Redux/redux-store";
 
 const Login = (props: any) => {
@@ -11,7 +11,7 @@ const Login = (props: any) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
     if (props.isAuth) {
-        return <Redirect to={'/profile'}/>
+        return <Navigate to={'/profile'}/>
     }
     return (
         <div>

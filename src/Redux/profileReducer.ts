@@ -1,4 +1,6 @@
 import {profileAPI} from "../api/api";
+import {AppActionType} from "./redux-store";
+import {Dispatch} from "redux";
 
 //state
 let initialState: ProfilePostsPropsType = {
@@ -31,17 +33,17 @@ export const setUserProfile = (profile:any) => {return {type: "SET-USER-PROFILE"
 export const setUserStatus = (status:any) => {return {type: "SET-USER-STATUS", status} as const}
 export const setUpdateUserStatus = (status:string) => {return {type: "UPDATE-USER-STATUS", status} as const}
 //thunks
-export const getUserProfile = (userId:number) => (dispatch: (action:ProfileActionType)=>void) => {
+export const getUserProfile = (userId:number) => (dispatch: Dispatch<AppActionType>) => {
     profileAPI.getUserProfile(userId).then(data => {
         dispatch(setUserProfile(data))
     })
 }
-export const getUserStatus = (userId:number) => (dispatch: (action:ProfileActionType)=>void) => {
+export const getUserStatus = (userId:number) => (dispatch: Dispatch<AppActionType>) => {
     profileAPI.getUserStatus(userId).then(data => {
         dispatch(setUserStatus(data))
     })
 }
-export const updateUserStatus = (status: string) => (dispatch: (action:ProfileActionType)=>void) => {
+export const updateUserStatus = (status: string) => (dispatch: Dispatch<AppActionType>) => {
     profileAPI.updateUserStatus(status)
         .then(data => {
         if (data.resultCode === 0) {dispatch(setUpdateUserStatus(status))}

@@ -1,25 +1,8 @@
 import {followAPI, userAPI} from "../api/api";
+import {AppActionType} from "./redux-store";
+import {Dispatch} from "redux";
 
-export type UsersPagePropsType = {
-    users: Array<UserPropsType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followInProgress: Array<number>
-}
-export type UserPropsType = {
-    "name": string,
-    "id": number,
-    "uniqueUrlName": null,
-    "photos": PhotoPropsType,
-    "status": null,
-    "followed": boolean
-}
-export type PhotoPropsType = {
-    "small": null,
-    "large": null
-}
+// state
 let initialState:UsersPagePropsType = {
     users:
         [
@@ -34,7 +17,7 @@ let initialState:UsersPagePropsType = {
     followInProgress: []
 }
 
-
+// reducer
 export const usersReducer = (state:UsersPagePropsType = initialState, action:UsersReducerActionType)=>{
     switch (action.type) {
         case "FOLLOW":
@@ -60,39 +43,20 @@ export const usersReducer = (state:UsersPagePropsType = initialState, action:Use
 
 }
 
-export type  UsersReducerActionType = followACType | unFollowACType | setUsersACType | setCurrentPageACType |
-    setTotalUsersCountACType | setIsFetchingACType | setFollowInProgressACType
-export type followACType = ReturnType<typeof follow>
-export const follow = (userId:number) => {
-    return {type: "FOLLOW", userId} as const
-}
-export type unFollowACType = ReturnType<typeof unFollow>
-export const unFollow = (userId:number) => {
-    return {type: "UNFOLLOW", userId} as const
-}
-export type setUsersACType = ReturnType<typeof setUsers>
-export const setUsers = (users:Array<UserPropsType>) => {
-    return {type: "SET-USERS", users} as const
-}
-export type setCurrentPageACType = ReturnType<typeof setCurrentPage>
-export const setCurrentPage = (currentPage:number) => {
-    return {type: "SET-CURRENT-PAGE", currentPage} as const
-}
-export type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCount>
-export const setTotalUsersCount = (totalUsersCount:number) => {
-    return {type: "SET-TOTAL-USERS-COUNT", totalUsersCount} as const
-}
-export type setIsFetchingACType = ReturnType<typeof setIsFetching>
-export const setIsFetching = (isFetching:boolean) => {
-    return {type: "SET-IS-FETCHING", isFetching} as const
-}
-export type setFollowInProgressACType = ReturnType<typeof setFollowInProgress>
+//actions
+export const follow = (userId:number) => {return {type: "FOLLOW", userId} as const}
+export const unFollow = (userId:number) => {return {type: "UNFOLLOW", userId} as const}
+export const setUsers = (users:Array<UserPropsType>) => {return {type: "SET-USERS", users} as const}
+export const setCurrentPage = (currentPage:number) => {return {type: "SET-CURRENT-PAGE", currentPage} as const}
+export const setTotalUsersCount = (totalUsersCount:number) => {return {type: "SET-TOTAL-USERS-COUNT", totalUsersCount} as const}
+export const setIsFetching = (isFetching:boolean) => {return {type: "SET-IS-FETCHING", isFetching} as const}
 export const setFollowInProgress = (isFollowInProgress:boolean, userId: number) => {
     return {type: "SET-FOLLOW-IN-PROGRESS", isFollowInProgress, userId} as const
 }
 
+//thunks
 export const getUsers = (currentPage:number, pageSize:number) => {
-    return (dispatch:(action:UsersReducerActionType)=>void) => {
+    return (dispatch:Dispatch<AppActionType>) => {
         dispatch(setIsFetching(true))
         userAPI.getUsers(currentPage, pageSize)
             .then(data => {
@@ -103,7 +67,7 @@ export const getUsers = (currentPage:number, pageSize:number) => {
     }
 }
 export const setUnFollowUser = (userId: number) => {
-    return (dispatch: (action:UsersReducerActionType)=>void) => {
+    return (dispatch: Dispatch<AppActionType>) => {
         dispatch(setFollowInProgress(true, userId))
         followAPI.deleteFollow(userId).then(data => {
             if (data.resultCode === 0) {
@@ -114,7 +78,7 @@ export const setUnFollowUser = (userId: number) => {
     }
 }
 export const setFollowUser = (userId: number) => {
-    return (dispatch: (action:UsersReducerActionType)=>void) => {
+    return (dispatch: Dispatch<AppActionType>) => {
         dispatch(setFollowInProgress(true, userId))
         followAPI.postFollow(userId).then(data => {
             if (data.resultCode === 0) {
@@ -124,3 +88,35 @@ export const setFollowUser = (userId: number) => {
         })
     }
 }
+
+// types
+export type UsersPagePropsType = {
+    users: Array<UserPropsType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    followInProgress: Array<number>
+}
+export type UserPropsType = {
+    "name": string,
+    "id": number,
+    "uniqueUrlName": null,
+    "photos": PhotoPropsType,
+    "status": null,
+    "followed": boolean
+}
+export type PhotoPropsType = {
+    "small": null,
+    "large": null
+}
+export type  UsersReducerActionType = followACType | unFollowACType | setUsersACType | setCurrentPageACType |
+    setTotalUsersCountACType | setIsFetchingACType | setFollowInProgressACType
+export type followACType = ReturnType<typeof follow>
+export type unFollowACType = ReturnType<typeof unFollow>
+export type setUsersACType = ReturnType<typeof setUsers>
+export type setCurrentPageACType = ReturnType<typeof setCurrentPage>
+export type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCount>
+export type setIsFetchingACType = ReturnType<typeof setIsFetching>
+export type setFollowInProgressACType = ReturnType<typeof setFollowInProgress>
+
