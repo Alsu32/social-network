@@ -1,0 +1,83 @@
+.usersPageContainer {
+    background-color: #E8E8E8;
+    border-radius: 10px;
+    padding: 5px;
+}
+.pagination {
+    padding: 10px;
+}
+.usersPage {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 5px;
+}
+.avatarBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+}
+.avatar {
+    height: 80px;
+    width: 80px;
+}
+.follow {
+
+}
+.descriptionBlock {
+    width: 500px;
+}
+.nameUserBlock {
+
+}
+.nameUser {
+
+}
+.statusUser {
+
+}
+.locationBlock {
+
+}
+.country {
+
+}
+.city {
+
+}
+.selectedPage {
+    font-weight: bold;
+}
+.loadingPage {
+    background-color: #E8E8E8;
+}
+.loader {
+    width: 84px;
+    height: 84px;
+    position: relative;
+    background-color: #E8E8E8;
+
+}
+.loader:before , .loader:after {
+    content: "";
+    position: absolute;
+    left: 400px;
+    top: 250px;
+    bottom: 0;
+    width:90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #206A5D;
+    opacity: 60%;
+    transform: translate(-50% , -100%)  scale(0);
+    animation: push 2s infinite linear;
+}
+.loader:after {
+    animation-delay: 1s;
+
+}
+@keyframes push {
+    0% , 50%{ transform: translate(-50% , 0%)  scale(1) }
+    100% { transform: translate(-50%, -100%) scale(0) }
+}

@@ -1,0 +1,16 @@
+.nav {
+    grid-area: nav;
+    background-color: #206A5D;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.item a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.active {
+    color: hotpink;
+}
